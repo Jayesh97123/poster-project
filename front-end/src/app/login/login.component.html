@@ -1,0 +1,26 @@
+<div class="container my-3">
+    <div class="d-flex justify-content-center">
+        <form [formGroup]="loginForm">
+            <div>
+                <label>
+                    <div>Enter Email</div>
+                    <input class="form-control my-2" type="email" formControlName="email" required>
+                </label>
+            </div>
+            <div>
+                <label>
+                    <div>Enter Password</div>
+                    <input class="form-control my-2" type="password" formControlName="password" required>
+                </label>
+            </div>
+            <div>
+                <span *ngIf="showErrorMsg" class="text-danger">Enter correct details</span>
+            </div>
+            <div class="my-2">
+                <button class="btn btn-primary" style="margin-right: 10px;" (click)="signIn()" [disabled]="loginForm.invalid">Sign in</button>
+                <button class="btn btn-secondary" style="margin-right: 10px;" type="reset">Reset</button>
+                <button class="btn btn-primary" style="margin-right: 10px;" (click)="signUp()">Sign Up</button>
+            </div>
+        </form>
+    </div>
+</div>
