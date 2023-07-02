@@ -25,6 +25,7 @@
             <div class="my-2">
                 <button class="btn btn-primary" style="margin-right: 10px;" (click)="signUp()" [disabled]="signUpForm.invalid">Sign Up</button>
                 <button class="btn btn-secondary" style="margin-right: 10px;" type="reset">Reset</button>
+                <button class="btn btn-primary" style="margin-right: 10px;" (click)="cancel()">Cancel</button>
             </div>
             <div>
                 <span *ngIf="showMsg" class="text-success">User created successfully</span>

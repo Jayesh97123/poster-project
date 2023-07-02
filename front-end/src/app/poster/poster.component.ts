@@ -1,19 +1,20 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AppService } from '../app.service';
-import { error } from 'console';
-import { Subject, debounceTime } from 'rxjs';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AppService } from "../app.service";
+import { error } from "console";
+import { Subject, debounceTime } from "rxjs";
 
 @Component({
-  selector: 'app-poster',
-  templateUrl: './poster.component.html',
-  styleUrls: ['./poster.component.css'],
+  selector: "app-poster",
+  templateUrl: "./poster.component.html",
+  styleUrls: ["./poster.component.css"],
 })
 export class PosterComponent implements OnInit {
-  @ViewChild('search')
+  @ViewChild("search")
   search!: ElementRef;
   subject: Subject<any> = new Subject();
   posterList: any;
+  posterListcompare: any;
   email: any;
   id: any;
 
@@ -25,13 +26,20 @@ export class PosterComponent implements OnInit {
 
   ngOnInit(): void {
     this.router.paramMap.subscribe((paraMap) => {
-      this.email = paraMap.get('email');
+      this.email = paraMap.get("email");
     });
 
     this.getPosterData(this.email);
 
     this.subject.pipe(debounceTime(300)).subscribe((res) => {
       console.log(res);
+      let filterListData: any[] = [];
+      this.posterListcompare.forEach((item: any) => {
+        if (item?.tag?.startsWith(res) || item?.tag?.endsWith(res)) {
+          filterListData.push(item);
+        }
+      });
+      this.posterList = filterListData;
     });
   }
 
@@ -40,6 +48,7 @@ export class PosterComponent implements OnInit {
       (res) => {
         console.log(res);
         this.posterList = res.posterData;
+        this.posterListcompare = res.posterData;
       },
       (error) => {
         console.log(error);

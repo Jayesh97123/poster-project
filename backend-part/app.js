@@ -33,6 +33,7 @@ app.get('/signupEmail/:email', (request, response) => {
     })
 });
 
+// check login details
 app.get('/login/:email/:password', (request, response) => {
     mongoClient.connect(dbUrl, {useNewUrlParser:true}, (err, client) => {
         // console.log(err, client)
