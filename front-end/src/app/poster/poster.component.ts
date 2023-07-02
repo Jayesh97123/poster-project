@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AppService } from "../app.service";
-import { error } from "console";
 import { Subject, debounceTime } from "rxjs";
 
 @Component({
@@ -32,7 +31,6 @@ export class PosterComponent implements OnInit {
     this.getPosterData(this.email);
 
     this.subject.pipe(debounceTime(300)).subscribe((res) => {
-      console.log(res);
       let filterListData: any[] = [];
       this.posterListcompare.forEach((item: any) => {
         if (item?.tag?.startsWith(res) || item?.tag?.endsWith(res)) {
@@ -46,13 +44,10 @@ export class PosterComponent implements OnInit {
   getPosterData(email: any) {
     this.appService.checkSignupEmail(email).subscribe(
       (res) => {
-        console.log(res);
         this.posterList = res.posterData;
         this.posterListcompare = res.posterData;
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => {}
     );
   }
 
@@ -66,5 +61,9 @@ export class PosterComponent implements OnInit {
 
   createPoster() {
     this.rout.navigate([`/poster-form/${this.email}/newUser/false`]);
+  }
+
+  signOut() {
+    this.rout.navigate(["/login"]);
   }
 }

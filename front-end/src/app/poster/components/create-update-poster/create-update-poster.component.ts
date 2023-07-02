@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { error } from 'console';
-import { AppService } from 'src/app/app.service';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AppService } from "src/app/app.service";
 
 @Component({
-  selector: 'app-create-update-poster',
-  templateUrl: './create-update-poster.component.html',
-  styleUrls: ['./create-update-poster.component.css'],
+  selector: "app-create-update-poster",
+  templateUrl: "./create-update-poster.component.html",
+  styleUrls: ["./create-update-poster.component.css"],
 })
 export class CreateUpdatePosterComponent implements OnInit {
   posterForm!: FormGroup;
@@ -23,20 +22,19 @@ export class CreateUpdatePosterComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((paramMap) => {
-      this.email = paramMap.get('email');
-      this.id = paramMap.get('id');
-      this.isUpdate = paramMap.get('isUpdate') == 'true' ? true : false;
+      this.email = paramMap.get("email");
+      this.id = paramMap.get("id");
+      this.isUpdate = paramMap.get("isUpdate") == "true" ? true : false;
     });
     this.posterForm = this.fb.group({
-      title: ['', [Validators.required]],
-      subTitle: ['', [Validators.required]],
-      tag: ['', [Validators.required]],
-      content: ['', [Validators.required]],
+      title: ["", [Validators.required]],
+      subTitle: ["", [Validators.required]],
+      tag: ["", [Validators.required]],
+      content: ["", [Validators.required]],
     });
 
     if (this.isUpdate) {
       this.appService.checkSignupEmail(this.email).subscribe((res) => {
-        console.log(res);
         let singleObject: any;
         res.posterData.forEach((item: any) => {
           if (item?.id == this.id) {
@@ -44,10 +42,10 @@ export class CreateUpdatePosterComponent implements OnInit {
             return;
           }
         });
-        this.posterForm.get('title')?.setValue(singleObject.title);
-        this.posterForm.get('subTitle')?.setValue(singleObject.subTitle);
-        this.posterForm.get('tag')?.setValue(singleObject.tag);
-        this.posterForm.get('content')?.setValue(singleObject.content);
+        this.posterForm.get("title")?.setValue(singleObject.title);
+        this.posterForm.get("subTitle")?.setValue(singleObject.subTitle);
+        this.posterForm.get("tag")?.setValue(singleObject.tag);
+        this.posterForm.get("content")?.setValue(singleObject.content);
       });
     }
   }
@@ -55,10 +53,10 @@ export class CreateUpdatePosterComponent implements OnInit {
   Submit() {
     if (this.isUpdate) {
       let body = {
-        title: this.posterForm.get('title')?.value,
-        subTitle: this.posterForm.get('subTitle')?.value,
-        tag: this.posterForm.get('tag')?.value,
-        content: this.posterForm.get('content')?.value,
+        title: this.posterForm.get("title")?.value,
+        subTitle: this.posterForm.get("subTitle")?.value,
+        tag: this.posterForm.get("tag")?.value,
+        content: this.posterForm.get("content")?.value,
       };
       this.appService.updatePoster(this.email, this.id, body).subscribe(
         (res) => {
@@ -70,10 +68,10 @@ export class CreateUpdatePosterComponent implements OnInit {
       );
     } else {
       let body = {
-        title: this.posterForm.get('title')?.value,
-        subTitle: this.posterForm.get('subTitle')?.value,
-        tag: this.posterForm.get('tag')?.value,
-        content: this.posterForm.get('content')?.value,
+        title: this.posterForm.get("title")?.value,
+        subTitle: this.posterForm.get("subTitle")?.value,
+        tag: this.posterForm.get("tag")?.value,
+        content: this.posterForm.get("content")?.value,
       };
       this.appService.createPoster(this.email, this.id, body).subscribe(
         (res) => {

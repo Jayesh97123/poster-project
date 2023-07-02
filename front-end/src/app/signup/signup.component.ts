@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AppService } from "../app.service";
-import { error } from "console";
 import { Router } from "@angular/router";
 
 @Component({
@@ -41,11 +40,9 @@ export class SignupComponent implements OnInit {
       .checkSignupEmail(this.signUpForm.get("email")?.value)
       .subscribe(
         (res) => {
-          console.log(res);
           this.checkEmail = true;
         },
         (error) => {
-          console.log(error);
           this.checkEmail = false;
           let body = {
             name: this.signUpForm.get("name")?.value,
@@ -54,7 +51,6 @@ export class SignupComponent implements OnInit {
           };
           this.appService.createUser(body).subscribe(
             (res) => {
-              console.log(res);
               this.showMsg = true;
               setTimeout(() => {
                 this.router.navigate(["/login"]);

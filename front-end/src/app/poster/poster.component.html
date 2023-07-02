@@ -3,7 +3,10 @@
         <span class="" style="margin: 5px; width: 31%;">
             <input class="form-control" type="text" #search placeholder="Search Tag" (keyup)="searchValue(search.value)">
         </span>
-        <button class="btn btn-primary" style="margin: 5px;" (click)="createPoster()">Create Poster</button>
+        <span>
+          <button class="btn btn-light" style="margin: 5px;" (click)="signOut()">Sign out</button>
+          <button class="btn btn-primary" style="margin: 5px;" (click)="createPoster()">Create Poster</button>
+        </span>
     </div>
     <table class="table">
         <thead>

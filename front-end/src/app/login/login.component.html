@@ -17,8 +17,8 @@
                 <span *ngIf="showErrorMsg" class="text-danger">Enter correct details</span>
             </div>
             <div class="my-2">
-                <button class="btn btn-primary" style="margin-right: 10px;" (click)="signIn()" [disabled]="loginForm.invalid">Sign in</button>
-                <button class="btn btn-secondary" style="margin-right: 10px;" type="reset">Reset</button>
+                <button class="btn btn-success" style="margin-right: 10px;" (click)="signIn()" [disabled]="loginForm.invalid">Sign in</button>
+                <button class="btn btn-light" style="margin-right: 10px;" type="reset">Reset</button>
                 <button class="btn btn-primary" style="margin-right: 10px;" (click)="signUp()">Sign Up</button>
             </div>
         </form>
