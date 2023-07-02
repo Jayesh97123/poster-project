@@ -67,13 +67,15 @@ export class CreateUpdatePosterComponent implements OnInit {
         (error) => {}
       );
     } else {
+      let newId =
+        (Number.isNaN(parseInt(this.id)) ? 11111 : parseInt(this.id)) + 1;
       let body = {
         title: this.posterForm.get("title")?.value,
         subTitle: this.posterForm.get("subTitle")?.value,
         tag: this.posterForm.get("tag")?.value,
         content: this.posterForm.get("content")?.value,
       };
-      this.appService.createPoster(this.email, this.id, body).subscribe(
+      this.appService.createPoster(this.email, newId, body).subscribe(
         (res) => {
           setTimeout(() => {
             this.cancel();

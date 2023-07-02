@@ -17,7 +17,6 @@ app.use(cors());
 //get login data
 app.get('/signupEmail/:email', (request, response) => {
     mongoClient.connect(dbUrl, {useNewUrlParser:true}, (err, client) => {
-        // console.log(err, client)
         if(err) 
             throw err;
         let email = request.params.email;
@@ -36,7 +35,6 @@ app.get('/signupEmail/:email', (request, response) => {
 // check login details
 app.get('/login/:email/:password', (request, response) => {
     mongoClient.connect(dbUrl, {useNewUrlParser:true}, (err, client) => {
-        // console.log(err, client)
         if(err) 
             throw err;
         let email = request.params.email;
@@ -56,7 +54,6 @@ app.get('/login/:email/:password', (request, response) => {
 //signup user
 app.post("/createUser", (request, response) => {
     mongoClient.connect(dbUrl,{useNewUrlParser:true},(error, client)=>{
-        // console.log(error, client)
         if(error) {
             throw error;
         } else {
@@ -119,7 +116,6 @@ app.post("/createPoster/:email/:id", (request, response) => {
             let email = request.params.email;
             let id = request.params.id;
             let customer= request.body;
-            console.log(request.body)
             let title = customer.title;
             let subTitle = customer.subTitle;
             let tag = customer.tag;
@@ -158,7 +154,6 @@ app.put("/updatePoster/:email/:id",(request,response)=>{
             let email = request.params.email;
             let id = request.params.id;
             let data = request.body;
-            console.log(data)
             let title = data.title;
             let subTitle = data.subTitle;
             let tag = data.tag;
@@ -177,8 +172,16 @@ app.put("/updatePoster/:email/:id",(request,response)=>{
 });
 
 //delete poster data
-// app.delete('/deletePoster/:id',(req,res)=>{
-//     res.status(200).json({
-//         _id:req.params.id
-//     })
-// })
+app.delete("/deletePoster/:email/:id", (request, response) => {
+    mongoClient.connect(dbUrl, {useNewUrlParser:true}, (error, client) => {
+        if(error) throw error;
+        let id = request.params.id;
+        let email = request.params.email;
+        let db = client.db("curdApp");
+        db.collection("userData").updateOne({email: email},{$pull: {"posterData": {id : id}}})
+        .then((doc) => {
+            response.json(doc);
+            client.close();
+        })
+    });
+});

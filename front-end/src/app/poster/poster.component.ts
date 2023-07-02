@@ -66,4 +66,12 @@ export class PosterComponent implements OnInit {
   signOut() {
     this.rout.navigate(["/login"]);
   }
+
+  deletePoster(id: any) {
+    this.appService.deletePoster(this.email, id).subscribe((res) => {
+      setTimeout(() => {
+        this.getPosterData(this.email);
+      }, 500);
+    });
+  }
 }
